@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<link rel="stylesheet" href="../css/custom.css">
+	<link rel="stylesheet" href="../css/normalize.css">
+
+	<title>Investigating neural speech codecs for flow-matching-based voice conversion</title>
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h1 style="text-align: center">
+        Anonymous submission to Interspeech 2026
+    </h1>
+	</div>
+	<p style="text-align: center">
+		Paper #647
+    </p>
+
+</div>
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+		<h2 id="neural-codec-comparison" style="text-align: center;">Read speech experiments</h2>
+			<p>
+				Audio Samples:
+			</p>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+			<thead>
+			<tr>
+			<th style="text-align: center">Source Audio</th>
+			<th style="text-align: center">Target Audio</th>
+			<th style="text-align: center">S3 Tokenizer</th>
+			<th style="text-align: center">StableCodec</th>
+			<th style="text-align: center">DualCodec</th>
+			<th style="text-align: center">FocalCodec</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+                                <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/p256_308_M.wav" autoplay/>Your browser does not support the audio element.</audio> <p> VCTK (p256 male)</p></td>
+                                <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-p228_F.wav" autoplay/>Your browser does not support the audio element.</audio> <p> VCTK (p228 female) </td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_p256_308_M_+target-p228_F_S3_tokenizer.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_p256_308_M_+target-p228_F_stablecodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_p256_308_M_+target-p228_F_dualcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_p256_308_M_+target-p228_F_focalcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+			<tr>
+                                <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/p228_131_F.wav" autoplay/>
+Your browser does not support the audio element.</audio> <p> VCTK (p228 female)</p></td>
+                                <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-p256_M.wav" autopla
+y/>Your browser does not support the audio element.</audio> <p> VCTK (p256 male) </td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_p228_131_F_+target-p256_M
+_S3_tokenizer.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_p228_131_F_+target-p256_M_
+stablecodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_p228_131_F_+target-p256_M_du
+alcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_p228_131_F_+target-p256_M_f
+ocalcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+			<tr>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/jvs003_M_BASIC5000_1388.wav" autoplay/>Your browser does not support the audio element.</audio> <p> JVS (jvs003 male)</p></td>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-jvs029_F.wav" autoplay/>Your browser does not support the audio element.</audio> <p> JVS (jvs029 female)</p></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_jvs003_M_BASIC5000_1388_+target-jvs029_F_S3_tokenizer.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_jvs003_M_BASIC5000_1388_+target-jvs029_F_stablecodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_jvs003_M_BASIC5000_1388_+target-jvs029_F_dualcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_jvs003_M_BASIC5000_1388_+target-jvs029_F_focalcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			<tr>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/jvs029_F_ONOMATOPEE300_212.wav" autoplay/>Your browser does not support the audio element.</audio><p> JVS (jvs029 female)</p></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-jvs003_M.wav" autoplay/>Your browser does not support the audio element.</audio><p> JVS (jvs003 male)</p></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_jvs029_F_ONOMATOPEE300_212_+target-jvs003_M_S3_tokenizer.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_jvs029_F_ONOMATOPEE300_212_+target-jvs003_M_stablecodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_jvs029_F_ONOMATOPEE300_212_+target-jvs003_M_dualcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_jvs029_F_ONOMATOPEE300_212_+target-jvs003_M_focalcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			<tr>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/cml_M_2946_3469_000042-0001.wav" autoplay/>Your browser does not support the audio element.</audio><p>CML (2946 male)</p></td>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-cml_F_136.wav" autoplay/>Your browser does not support the audio element.</audio><p>CML (136 female)</p></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_cml_M_2946_3469_000042-0001_+target-cml_F_136_S3_tokenizer.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_cml_M_2946_3469_000042-0001_+target-cml_F_136_stablecodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_cml_M_2946_3469_000042-0001_+target-cml_F_136_dualcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_cml_M_2946_3469_000042-0001_+target-cml_F_136_focalcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			<tr>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/cml_F_1171_931_000048-0001.wav" autoplay/>Your browser does not support the audio element.</audio><p>CML (1171 female)</p></td>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-cml_M_143.wav" autoplay/>Your browser does not support the audio element.</audio><p>CML (143 male)</p></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_cml_F_1171_931_000048-0001_+target-cml_M_143_S3_tokenizer.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_cml_F_1171_931_000048-0001_+target-cml_M_143_stablecodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_cml_F_1171_931_000048-0001_+target-cml_M_143_dualcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_cml_F_1171_931_000048-0001_+target-cml_M_143_focalcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			</tbody>
+			</table>
+		</div>
+</div>
+
+
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+		<h2 id="neural-codec-comparison" style="text-align: center;">Speech containing paralinguistic sounds experiments</h2>
+			<p>
+				Audio Samples:
+			</p>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+			<thead>
+			<tr>
+			<th style="text-align: center">Source Audio</th>
+			<th style="text-align: center">Target Audio</th>
+			<th style="text-align: center">S3 Tokenizer</th>
+			<th style="text-align: center">StableCodec</th>
+			<th style="text-align: center">DualCodec</th>
+			<th style="text-align: center">FocalCodec</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+                                <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/ex01_happy_00004.wav" autoplay/>Your browser does not support the audio element.</audio> <p> Expresso happy (ex01 male)</p></td>
+                                <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-ex02_F.wav" autoplay/>Your browser does not support the audio element.</audio> <p> Expresso (ex02 female) </td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_ex01_happy_00004_+target-ex02_F_S3_tokenizer-happy.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_ex01_happy_00004_+target-ex02_F_stablecodec-happy.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_ex01_happy_00004_+target-ex02_F_dualcodec-happy.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_ex01_happy_00004_+target-ex02_F_focalcodec-happy.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+			<tr>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/ex02_happy_00016.wav" autoplay/>Your browser does not support the audio element.</audio> <p> Expresso happy (ex02 female)</p></td>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-ex03_M.wav" autoplay/>Your browser does not support the audio element.</audio> <p> Expresso (ex03 male) </td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_ex02_happy_00016_+target-ex03_M_S3_tokenizer-happy.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_ex02_happy_00016_+target-ex03_M_stablecodec-happy.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_ex02_happy_00016_+target-ex03_M_dualcodec-happy.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_ex02_happy_00016_+target-ex03_M_focalcodec-happy.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			<tr>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/ex01_laughing_00003.wav" autoplay/>Your browser does not support the audio element.</audio><p>Expresso laughing (ex01 male)</p></td>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-ex04_F.wav" autoplay/>Your browser does not support the audio element.</audio><p>Expresso (ex04 female)</p></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_ex01_laughing_00003_+target-ex04_F_S3_tokenizer-laughing.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_ex01_laughing_00003_+target-ex04_F_stablecodec-laughing.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_ex01_laughing_00003_+target-ex04_F_dualcodec-laughing.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_ex01_laughing_00003_+target-ex04_F_focalcodec-laughing.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			<tr>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/ex04_laughing_00025.wav" autoplay/>Your browser does not support the audio element.</audio><p>Expresso laughing (ex04 female)</td>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-ex03_M.wav" autoplay/>Your browser does not support the audio element.</audio><p>Expresso (ex03 male)</p></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_ex04_laughing_00025_+target-ex03_M_S3_tokenizer-laughing.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_ex04_laughing_00025_+target-ex03_M_stablecodec-laughing.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_ex04_laughing_00025_+target-ex03_M_dualcodec-laughing.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_ex04_laughing_00025_+target-ex03_M_focalcodec-laughing.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			<tr>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/ex01_whisper_00031.wav" autoplay/>Your browser does not support the audio element.</audio><p>Expresso whisper (ex01 male)</p></td>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-ex02_F.wav" autoplay/>Your browser does not support the audio element.</audio><p>Expresso (ex02 female)</p></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_ex01_whisper_00031_+target-ex02_F_S3_tokenizer-whisper.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_ex01_whisper_00031_+target-ex02_F_stablecodec-whisper.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_ex01_whisper_00031_+target-ex02_F_dualcodec-whisper.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_ex01_whisper_00031_+target-ex02_F_focalcodec-whisper.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			<tr>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/ex04_whisper_00015.wav" autoplay/>Your browser does not support the audio element.</audio><p>Expresso whisper (ex04 female)</td>
+				<td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-ex03_M.wav" autoplay/>Your browser does not support the audio element.</audio><p>Expresso (ex03 male)</p></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_ex04_whisper_00015_+target-ex03_M_S3_tokenizer-whisper.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_ex04_whisper_00015_+target-ex03_M_stablecodec-whisper.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_ex04_whisper_00015_+target-ex03_M_dualcodec-whisper.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_ex04_whisper_00015_+target-ex03_M_focalcodec-whisper.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+			</tbody>
+			</table>
+		</div>
+</div>
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+                <h2 id="neural-codec-comparison" style="text-align: center;">Noisy speech experiments</h2>
+                        <p>
+                                Audio Samples:
+                        </p>
+                <div class="table-responsive pt-3">
+                        <table class="table table-hover pt-2">
+                        <thead>
+                        <tr>
+                        <th style="text-align: center">Source Audio</th>
+                        <th style="text-align: center">Target Audio</th>
+                        <th style="text-align: center">S3 Tokenizer</th>
+                        <th style="text-align: center">StableCodec</th>
+                        <th style="text-align: center">DualCodec</th>
+                        <th style="text-align: center">FocalCodec</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                                <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/p256_308_M_noisy.wav" autoplay/>Your browser does not support the audio element.</audio> <p> VCTK (p256 male)</p></td>
+                                <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-p228_F.wav" autoplay/>Your browser does not support the audio element.</audio> <p> VCTK (p228 female) </td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_p256_308_noisy+target-p228_F_S3_tokenizer.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_p256_308_noisy+target-p228_F_stablecodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_p256_308_noisy+target-p228_F_dualcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_p256_308_noisy+target-p228_F_focalcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+			<tr>
+                                <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="source/p228_131_F_noisy.wav" autoplay/>Your browser does not support the audio element.</audio><p>VCTK (p228 female)</td>
+                                <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="target/target-p256_M.wav" autoplay/>Your browser does not support the audio element.</audio><p>VCTK (p256 male)</p></td>
+			        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="s3_tokenizer/vc_p228_131_noisy+target-p256_M_S3_tokenizer.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="stablecodec/vc_p228_131_noisy+target-p256_M_stablecodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="dualcodec/vc_p228_131_noisy+target-p256_M_dualcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        <td style="text-align: center"><audio controls="controls" style="width: 140px;"><source src="focalcodec/vc_p228_131_noisy+target-p256_M_focalcodec.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                </div>
+</div>
+</body>
+</html>
